@@ -3839,8 +3839,8 @@ return "dashboard_ficha";
       @GetMapping("/applogin")
       @ResponseBody
       public String getLogin(
-         @RequestParam String email,
-         @RequestParam String senha,
+         @RequestParam String username,
+         @RequestParam String password,
          Model model) {
 
            ArrayList<String> output = new ArrayList<String>();
@@ -3848,21 +3848,21 @@ return "dashboard_ficha";
          	    Connection connection = dataSource.getConnection();
          	    //Prepara as variaveis para atuar no BD
          	    Statement stmt = connection.createStatement();
-         	    ResultSet rs = stmt.executeQuery("SELECT senha FROM usuarios WHERE email='"+email+"'");
+         	    ResultSet rs = stmt.executeQuery("SELECT senha FROM usuarios WHERE email='"+username+"'");
 
          	    if (rs.next()) {
          		     //Verifica a senha do e-mail
-         		      String candidate=senha;
+         		      String candidate=password;
          		       String hashed=(String)rs.getObject(1);
          		        if (BCrypt.checkpw(candidate, hashed)){
          		           output.add("Usuario e senha corretos!");
          		            //return "dashboard_ficha";
                         //return "Usuario: " + email + " Senha: " + senha;
                         //Retorna um XML para o aplicativo
-                        AppLogin login = new AppLogin(email);
-                        String permissao = new String("ALLOW");
-                        output.add(login.getLoginXML(permissao));
-                        return login.getLoginXML(permissao);
+                        AppLogin login = new AppLogin(username);
+                        String permission = new String("ALLOW");
+                        output.add(login.getLoginXML(permission));
+                        return login.getLoginXML(permission);
 
          		        } else {
          		           output.add("Senha invalida!");
@@ -3872,7 +3872,7 @@ return "dashboard_ficha";
          		    output.add("Usuário ou Senha invalida!");
 
               //Se chegou ate aqui, o acesso nao deve ser permitido
-              AppLogin login = new AppLogin(email);
+              AppLogin login = new AppLogin(username);
               String permissao = new String("DENY");
               output.add(login.getLoginXML(permissao));
               return login.getLoginXML(permissao);
