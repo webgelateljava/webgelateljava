@@ -1,5 +1,7 @@
 
-##Projeto Webgelatel (versão para Microsoft Windows)
+## Projeto Webgelatel (versão para Microsoft Windows)
+
+## Código com .git para o Github
 
 23/09/2020 (@lucio): Primeira versão Windows do projeto Webgelatel
 
